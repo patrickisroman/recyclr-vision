@@ -1,7 +1,6 @@
 import os
 import sys
 import setup
-import ship
 
 from pathlib import Path
 
@@ -9,8 +8,7 @@ MODULES = [
     'clean',
     'download',
     'eval',
-    'train',
-    'ship'
+    'train'
 ]
 
 def parse_module():
@@ -30,8 +28,6 @@ def main():
         setup.eval()
     elif module == 'train':
         setup.train()
-    elif module == 'ship'
-    pass
 
 if __name__ == '__main__':
     main()

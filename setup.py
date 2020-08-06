@@ -15,7 +15,6 @@ import shutil
 import json
 import boto3
 import sys
-import ship
 
 from git import Repo
 from botocore import UNSIGNED
