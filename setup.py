@@ -21,6 +21,9 @@ from botocore import UNSIGNED
 from botocore.client import Config
 from google_drive_downloader import GoogleDriveDownloader as gdd
 from pathlib import Path
+from stream import stream_manager
+from stream import prune
+
 
 # Setup Directory
 CURRENT_DIRECTORY  = Path(__file__).absolute().parent
@@ -48,7 +51,7 @@ DATASET_PATH     = TMP_DIRECTORY.joinpath(DATASET_FILE)
 ANNOTATIONS_PATH = TMP_DIRECTORY.joinpath(ANNOTATIONS_FILE)
 WEIGHTS_PATH     = TMP_DIRECTORY.joinpath(WEIGHTS_FILE)
 
-YOLACT_RECYCLR_CONF = 'yolact_recyclr_config'
+YOLACT_CONF = 'yolact_recyclr_config'
 
 # Boto setup
 BOTO_S3_CLIENT = boto3.client('s3', config=Config(signature_version=UNSIGNED))
@@ -69,6 +72,10 @@ def train():
         os.system('python %s --config=%s --cuda=1 --resume=./weights/%s --save_interval=1000' %(train_file, config, weight))
     else:
         os.system('python %s --config=%s --cuda=1 --save_interval=1000' % (train_file, config))
+
+def prune_coco(min_items_per_class=10):
+    sm = stream_manager.StreamManager()
+    pruned = prune.prune(ANNOTATIONS_FILE, min_items_per_class=min_items_per_class)
 
 def eval():
     # command args
@@ -200,8 +207,8 @@ def setup_yolact():
         )
 
         model_str = model_str_template % (
-            YOLACT_RECYCLR_CONF,
-            YOLACT_RECYCLR_CONF,
+            YOLACT_CONF,
+            YOLACT_CONF,
             len(category_list) + 1
         )
         

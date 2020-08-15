@@ -6,10 +6,6 @@ import pathlib
 
 DEFAULT_STREAM_DIR = Path.joinpath(Path(__file__).resolve().parent, 'stream_data/')
 
-class BlankObject:
-    def __init__(self, val):
-        self.value = val
-
 class StreamManager:
     def __init__(self, stream_dir=DEFAULT_STREAM_DIR):
         self.stream_dir = stream_dir
@@ -21,6 +17,12 @@ class StreamManager:
     def search_tree(self, class_name):
         node = self.stream_tree.get_node(class_name)
         return node
+    
+    def in_order_list(self, reverse_list=False):
+        tag_list = [self.stream_tree[node].tag for node in self.stream_tree.expand_tree(mode=Tree.WIDTH)]
+        if reverse_list:
+            tag_list.reverse()
+        return tag_list
     
     # left-to-right in-order list that can be transformed into graph
     def build_stream_tree(self):

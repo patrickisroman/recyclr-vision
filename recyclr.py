@@ -8,7 +8,8 @@ MODULES = [
     'clean',
     'download',
     'eval',
-    'train'
+    'train',
+    'prune'
 ]
 
 def parse_module():
@@ -28,6 +29,11 @@ def main():
         setup.eval()
     elif module == 'train':
         setup.train()
+    elif module == 'prune':
+        prune_num = 10
+        if len(sys.argv) > 2:
+            prune_num = int(sys.argv[2])
+        setup.prune_coco(prune_num)
 
 if __name__ == '__main__':
     main()
