@@ -8,6 +8,7 @@
 # > organize assets
 # > update yolact configuration
 
+import subprocess
 import os
 import wget
 import tarfile
@@ -36,9 +37,6 @@ DATA_DIRECTORY     = RECYCLR_DIRECTORY.joinpath('data')
 BACKBONE_DIRECTORY = YOLACT_DIRECTORY.joinpath('weights')
 
 # External Data URLs
-DATASET_URL     = 'https://recyclr.s3-us-west-2.amazonaws.com/frames.tar.gz'
-ANNOTATIONS_URL = 'https://recyclr.s3-us-west-2.amazonaws.com/coco_new.json'
-WEIGHTS_URL     = 'https://recyclr.s3-us-west-2.amazonaws.com/weights.pth'
 YOLACT_GIT_URL  = 'https://github.com/dbolya/yolact.git'
 BACKBONE_URL_ID = '1tvqFPd4bJtakOlmn-uIA492g2qurRChj'
 
@@ -57,21 +55,19 @@ YOLACT_CONF = 'yolact_recyclr_config'
 BOTO_S3_CLIENT = boto3.client('s3', config=Config(signature_version=UNSIGNED))
 
 def train():
-    # command args
-    input_video = 'validation720.mov'
-    output_video = 'output.mp4'
-    video_multiframe = 1
-    top_k = 15
-    score_threshold = .3
-    config = 'yolact_plus_base_recyclr_config'
-    # loaded
-    weight = [w for w in os.listdir('./weights') if 'interrupt' in w][-1] if os.path.exists('./weights') else None
+    config = YOLACT_CONF
+    weight = None
+    if os.path.exists('./weights'):
+        weight = [w for w in os.listdir('./weights') if 'interrupt' in w][-1]
     train_file = YOLACT_DIRECTORY.joinpath('train.py')
 
     if weight is not None:
-        os.system('python %s --config=%s --cuda=1 --resume=./weights/%s --save_interval=1000' %(train_file, config, weight))
+        cmd = ['python', train_file, '--config=%s' % config, '--cuda=1', '--resume=./weights/%s' % weight, '--save_interval=1000']
     else:
-        os.system('python %s --config=%s --cuda=1 --save_interval=1000' % (train_file, config))
+        cmd = ['python', train_file, '--config=%s' % config, '--cuda=1', '--save_interval=1000']
+
+    p = subprocess.Popen(cmd, cwd=str(os.path.abspath(YOLACT_DIRECTORY)))
+    p.wait()
 
 def prune_coco(min_items_per_class=10):
     sm = stream_manager.StreamManager()
@@ -79,16 +75,24 @@ def prune_coco(min_items_per_class=10):
 
 def eval():
     # command args
-    input_video = 'a.mov'
+    config = YOLACT_CONF
+    input_video = 'input.mov'
     output_video = 'output.mp4'
     video_multiframe = 1
     top_k = 15
-    score_threshold = .35
-    config = 'yolact_plus_base_recyclr_config'
+    score_threshold = .5
     # loaded
-    weight = [w for w in os.listdir('./weights') if 'interrupt' in w][-1]
-    if weight:
-        os.system('python recyclr/yolact/eval.py --trained_model=./weights/%s --config=%s --top_k=%s --score_threshold=%s --video_multiframe=%s --video=%s:%s' %  (weight, config, top_k, score_threshold, video_multiframe, input_video, output_video))
+    if os.path.exists(BACKBONE_DIRECTORY):
+       weight = [w for w in os.listdir(BACKBONE_DIRECTORY) if 'interrupt' in w][-1]
+       weight = BACKBONE_DIRECTORY.joinpath(weight)
+   
+    print(weight)
+    if not weight:
+        return
+
+    cmd = ['python', 'eval.py', '--trained_model=%s' % weight, '--config=%s' % config, '--top_k=%s' % top_k, '--score_threshold=%s' % score_threshold, '--video_multiframe=%s' % video_multiframe, '--video=%s:%s' % (input_video, output_video)]
+    p = subprocess.Popen(cmd, cwd=str(os.path.abspath(YOLACT_DIRECTORY)))
+    p.wait()
 
 def download():
     clean()
@@ -185,14 +189,16 @@ def setup_yolact():
                 category_list.append(cat['name'])
             
         cat_list = str(category_list).replace('[', '(').replace(']', ')')
-        rel_annotation_path = os.path.relpath(DATA_DIRECTORY.joinpath(ANNOTATIONS_FILE), YOLACT_DIRECTORY)
-        rel_data_path = os.path.relpath(DATA_DIRECTORY, YOLACT_DIRECTORY)
+        abs_annotation_path = os.path.abspath(DATA_DIRECTORY.joinpath(ANNOTATIONS_FILE))
+        abs_data_path = os.path.abspath(DATA_DIRECTORY)
+
+        shutil.copyfile(WEIGHTS_PATH, BACKBONE_DIRECTORY.joinpath(WEIGHTS_FILE))
 
         conf_str = conf_str_template % (
-            rel_annotation_path,
-            rel_data_path,
-            rel_annotation_path,
-            rel_data_path,
+            abs_annotation_path,
+            abs_data_path,
+            abs_annotation_path,
+            abs_data_path,
             cat_list
         )
 
