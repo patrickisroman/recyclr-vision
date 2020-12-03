@@ -1,0 +1,93 @@
+{
+    "default" : {},
+    "other" : {
+        "parent" : "default"
+    },
+    "plastic" : {
+        "parent" : "default"
+    },
+    "fiber" : {
+        "parent" : "default"
+    },
+    "metal" : {
+        "parent" : "default"
+    },
+    "glass" : {
+        "parent" : "default"
+    },
+    "wood" : {
+        "parent" : "default"
+    },
+    "organic" : {
+        "parent" : "default"
+    },
+    "compostable" : {
+        "parent" : "organic"
+    },
+    "polyethylene terephthalate" : {
+        "parent" : "plastic",
+        "tags" : ["PET", "PETE"],
+        "attributes" : {
+            "ric" : "1"
+        }
+    },
+    "high density polyethylene" : {
+        "parent" : "plastic",
+        "tags" : "HDPE",
+        "attributes" : {
+            "ric" : "2"
+        }
+    },
+    "polyvinyl chloride" : {
+        "parent" : "plastic",
+        "tags" : "PVC",
+        "attributes" : {
+            "ric" : "3"
+        }
+    },
+    "low density polyethylene" : {
+        "parent" : "plastic",
+        "tags" : "LDPE",
+        "attributes" : {
+            "ric" : "4"
+        }
+    },
+    "polypropylene" : {
+        "parent" : "plastic",
+        "tags" : "PP",
+        "attributes" : {
+            "ric" : "5"
+        }
+    },
+    "polystyrene" : {
+        "parent" : "plastic",
+        "tags" : "PS",
+        "attributes" : {
+            "ric" : "6"
+        }
+    },
+    "resin" : {
+        "parent" : "plastic",
+        "attributes" : {
+            "ric" : "7"
+        }
+    },
+    "paper" : {
+        "parent" : "fiber"
+    },
+    "paperboard" : {
+        "parent" : "fiber"
+    },
+    "cardboard" : {
+        "parent" : "fiber"
+    },
+    "aluminum" : {
+        "parent" : "metal"
+    },
+    "tin" : {
+        "parent" : "metal"
+    },
+    "steel" : {
+        "parent" : "metal"
+    }
+}

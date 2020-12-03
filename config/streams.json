@@ -1,0 +1,30 @@
+{
+    "default" : {},
+    "streams" : [
+        "plastic",
+        "plastic bags",
+        "fiber",
+        "paper",
+        "plastic beverage bottles",
+        "ldpe",
+        "bad bags"
+    ],
+    "materials" : {
+        "fiber" : "fiber",
+        "paper" : "paper",
+        "plastic" : {
+            "default" : "plastic",
+            "beverage bottle" : "plastic beverage bottles",
+            "bag" : "plastic bags"
+        },
+        "low density polyethylene" : "ldpe",
+        "high density polyethylene" : {
+            "default" : "plastic",
+            "bag" : "plastic bags",
+            "grocery bag" : "bad bags"
+        },
+        "resin" : {
+            "default" : "default"
+        }
+    }
+}

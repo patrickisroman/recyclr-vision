@@ -1,0 +1,258 @@
+{
+    "default" : {},
+    "battery" : {
+        "parent" : "default"
+    },
+    "beverage can" : {
+        "parent" : "can"
+    },
+    "beverage bottle" : {
+        "parent" : "bottle"
+    },
+    "bottle" : {
+        "parent" : "default"
+    },
+    "bottlecap" : {
+        "parent" : "default"
+    },
+    "can" : {
+        "parent" : "default"
+    },
+    "candy wrapper" : {
+        "parent" : "wrapper"
+    },
+    "chip bag" : {
+        "parent" : "bag"
+    },
+    "chopsticks" : {
+        "parent" : "utensil"
+    },
+    "cigarette" : {
+        "parent" : "default"
+    },
+    "coffee cup" : {
+        "parent" : "cup"
+    },
+    "coffee cup with lid" : {
+        "parent" : "cup"
+    },
+    "cup" : {
+        "parent" : "default"
+    },
+    "fork" : {
+        "parent" : "utensil"
+    },
+    "jar" : {
+        "parent" : "default"
+    },
+    "knife" : {
+        "parent" : "utensil"
+    },
+    "lid" : {
+        "parent" : "default"
+    },
+    "medicine bottle" : {
+        "parent" : "bottle"
+    },
+    "pen" : {
+        "parent" : "default"
+    },
+    "pencil" : {
+        "parent" : "default"
+    },
+    "prescription bottle" : {
+        "parent" : "medicine bottle"
+    },
+    "receipt" : {
+        "parent" : "sheet"
+    },
+    "soda bottle" : {
+        "parent" : "beverage bottle"
+    },
+    "soda can" : {
+        "parent" : "beverage can"
+    },
+    "container" : {
+        "parent" : "default"
+    },
+    "spoon" : {
+        "parent" : "utensil"
+    },
+    "stirrer" : {
+        "parent" : "default"
+    },
+    "straw" : {
+        "parent" : "default"
+    },
+    "utensil" : {
+        "parent" : "default"
+    },
+    "waterbottle" : {
+        "parent" : "beverage bottle"
+    },
+    "reusable waterbottle" : {
+        "parent" : "beverage bottle"
+    },
+    "wrapper" : {
+        "parent" : "default"
+    },
+    "sticker" : {
+        "parent" : "default"
+    },
+    "sheet" : {
+        "parent" : "default"
+    },
+    "condiment cup" : {
+        "parent" : "cup"
+    },
+    "solo cup" : {
+        "parent" : "cup"
+    },
+    "box" : {
+        "parent" : "default"
+    },
+    "cereal box" : {
+        "parent" : "box"
+    },
+    "pizza box" : {
+        "parent" : "box"
+    },
+    "bag" : {
+        "parent" : "default"
+    },
+    "newspaper" : {
+        "parent" : "default"
+    },
+    "wine bottle" : {
+        "parent" : "beverage bottle"
+    },
+    "beer bottle" : {
+        "parent" : "beverage bottle"
+    },
+    "carton" : {
+        "parent" : "default"
+    },
+    "pop top" : {
+        "parent" : "default"
+    },
+    "straw wrapper" : {
+        "parent" : "wrapper"
+    },
+    "dish" : {
+        "parent" : "default"
+    },
+    "tray" : {
+        "parent" : "dish"
+    },
+    "bowl" : {
+        "parent" : "dish"
+    },
+    "plate" : {
+        "parent" : "dish"
+    },
+    "napkin" : {
+        "parent" : "default"
+    },
+    "coffee filter" : {
+        "parent" : "default"
+    },
+    "hairtie" : {
+        "parent" : "default"
+    },
+    "teabag" : {
+        "parent" : "default"
+    },
+    "trash bag" : {
+        "parent" : "bag"
+    },
+    "grocery bag" : {
+        "parent" : "bag"
+    },
+    "cotton swab" : {
+        "parent" : "default"
+    },
+    "rubber band" : {
+        "parent" : "default"
+    },
+    "beer can" : {
+        "parent" : "beverage can"
+    },
+    "cup sleeve" : {
+        "parent" : "default"
+    },
+    "ziplock bag" : {
+        "parent" : "bag"
+    },
+    "2 liter bottle" : {
+        "parent" : "beverage bottle"
+    },
+    "bandaid" : {
+        "parent" : "default"
+    },
+    "bread clip" : {
+        "parent" : "default"
+    },
+    "packet" : {
+        "parent" : "default"
+    },
+    "condiment packet" : {
+        "parent" : "packet"
+    },
+    "mustard packet" : {
+        "parent" : "condiment packet"
+    },
+    "ketchup packet" : {
+        "parent" : "condiment packet"
+    },
+    "mayonnaise packet" : {
+        "parent" : "condiment packet"
+    },
+    "diaper" : {
+        "parent" : "default"
+    },
+    "ball" : {
+        "parent" : "default"
+    },
+    "lollipop stick" : {
+        "parent" : "default"
+    },
+    "food can" : {
+        "parent" : "can"
+    },
+    "egg carton" : {
+        "parent" : "carton"
+    },
+    "envelope" : {
+        "parent" : "default"
+    },
+    "tag" : {
+        "parent" : "sheet"
+    },
+    "papertowel" : {
+        "parent" : "default"
+    },
+    "condiment bottle" : {
+        "parent" : "bottle"
+    },
+    "jug" : {
+        "parent" : "container"
+    },
+    "ice cream spoon" : {
+        "parent" : "spoon"
+    },
+    "tissue" : {
+        "parent" : "default"
+    },
+    "sunglasses" : {
+        "parent" : "default"
+    },
+    "styrofoam" : {
+        "parent" : "default"
+    },
+    "clothing" : {
+        "parent" : "default"
+    },
+    "sock" : {
+        "parent" : "clothing"
+    }
+}

@@ -1,0 +1,5 @@
+{
+    "elements" : "elements.json",
+    "materials" : "materials.json",
+    "streams" : "streams.json"
+}

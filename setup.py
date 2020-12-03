@@ -25,6 +25,11 @@ from pathlib import Path
 from stream import stream_manager
 from stream import prune
 
+# Yolact Configurations
+
+VIDEO_MULTIFRAME = .1
+TOP_K = 15
+SCORE_THRESHOLD = .5
 
 # Setup Directory
 CURRENT_DIRECTORY  = Path(__file__).absolute().parent
@@ -62,7 +67,13 @@ def train():
     train_file = YOLACT_DIRECTORY.joinpath('train.py')
 
     if weight is not None:
-        cmd = ['python', train_file, '--config=%s' % config, '--cuda=1', '--resume=./weights/%s' % weight, '--save_interval=1000']
+        cmd = [
+            'python',
+            train_file,
+            '--config=%s' % config,
+            '--cuda=1', '--resume=./weights/%s' % weight,
+            '--save_interval=1000'
+            ]
     else:
         cmd = ['python', train_file, '--config=%s' % config, '--cuda=1', '--save_interval=1000']
 
@@ -71,16 +82,15 @@ def train():
 
 def prune_coco(min_items_per_class=10):
     sm = stream_manager.StreamManager()
-    pruned = prune.prune(ANNOTATIONS_FILE, min_items_per_class=min_items_per_class)
+    return prune.prune(ANNOTATIONS_FILE, min_items_per_class)
 
-def eval():
-    # command args
-    config = YOLACT_CONF
-    input_video = 'input.mov'
-    output_video = 'output.mp4'
-    video_multiframe = 1
-    top_k = 15
-    score_threshold = .5
+def evaluate(config=YOLACT_CONF,
+             top_k=TOP_K,
+             score_threshold=SCORE_THRESHOLD,
+             video_multiframe=VIDEO_MULTIFRAME,
+             input_video='input.mov',
+             output_video='output.mp4'):
+
     # loaded
     if os.path.exists(BACKBONE_DIRECTORY):
        weight = [w for w in os.listdir(BACKBONE_DIRECTORY) if 'interrupt' in w][-1]
@@ -90,7 +100,16 @@ def eval():
     if not weight:
         return
 
-    cmd = ['python', 'eval.py', '--trained_model=%s' % weight, '--config=%s' % config, '--top_k=%s' % top_k, '--score_threshold=%s' % score_threshold, '--video_multiframe=%s' % video_multiframe, '--video=%s:%s' % (input_video, output_video)]
+    cmd = [
+        'python',
+        'eval.py',
+        '--trained_model=%s' % weight, 
+        '--config=%s' % config,
+        '--top_k=%s' % top_k, 
+        '--score_threshold=%s' % score_threshold,
+        '--video_multiframe=%s' % video_multiframe,
+        '--video=%s:%s' % (input_video, output_video)
+        ]
     p = subprocess.Popen(cmd, cwd=str(os.path.abspath(YOLACT_DIRECTORY)))
     p.wait()
 
@@ -170,18 +189,6 @@ def setup_yolact():
 
     def generate_yolact_config():
         # build category list
-        conf_str_template = (
-            "recyclr_dataset = dataset_base.copy({\n"
-            "\t'name'         : 'Recyclr Dataset',\n"
-            "\t'train_info'   : '%s',\n"
-            "\t'train_images' : '%s',\n"
-            "\t'valid_info'   : '%s',\n"
-            "\t'valid_images' : '%s',\n"
-            "\t'class_names'  : %s,\n"
-            "\t'label_map'    : {k:k for k in range(200)}\n"
-            "})\n"
-        )
-
         category_list = []
         with open(DATA_DIRECTORY.joinpath(ANNOTATIONS_FILE), 'r') as ann:
             json_obj = json.loads(ann.read())
@@ -194,6 +201,17 @@ def setup_yolact():
 
         shutil.copyfile(WEIGHTS_PATH, BACKBONE_DIRECTORY.joinpath(WEIGHTS_FILE))
 
+        conf_str_template = (
+            "recyclr_dataset = dataset_base.copy({\n"
+            "\t'name'         : 'Recyclr Dataset',\n"
+            "\t'train_info'   : '%s',\n"
+            "\t'train_images' : '%s',\n"
+            "\t'valid_info'   : '%s',\n"
+            "\t'valid_images' : '%s',\n"
+            "\t'class_names'  : %s,\n"
+            "\t'label_map'    : {k:k for k in range(200)}\n"
+            "})\n")
+        
         conf_str = conf_str_template % (
             abs_annotation_path,
             abs_data_path,
@@ -234,23 +252,23 @@ def setup_yolact():
         if 'yolact_im400_config' in line:
             model_line = i
     
-    contents.insert(conf_line, data_conf[0])
+    contents.insert(conf_line,  data_conf[0])
     contents.insert(model_line, data_conf[1])
 
-    OUT_CONF_FILE = YOLACT_DIRECTORY.joinpath('data').joinpath('config.py')
+    out_conf_file = YOLACT_DIRECTORY.joinpath('data').joinpath('config.py')
 
-    with open(OUT_CONF_FILE, 'w+') as f:
+    with open(out_conf_file, 'w+') as f:
         f.write(''.join(contents))
 
-    print('Finished setting up YOLACT configuration')
+    print('YOLACT configuration generated at %s' % out_conf_file)
 
 
 def setup():
-    print('\n=== Recyclr Setup ====')
+    print('\nRecyclr Setup')
     setup_tmp()
     setup_coco()
     setup_yolact()
-    print('=== Setup Completed ===\n')
+    print('Setup Completed\n')
 
 def clean():
     # clean tmp directory
@@ -270,7 +288,7 @@ def clean():
         shutil.rmtree(str(RECYCLR_DIRECTORY))
     
 def main():
-    clean()
+    clean() # clean workspace by default
     setup()
 
 if __name__ == '__main__':

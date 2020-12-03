@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import os
 import sys
 import setup
@@ -9,24 +11,29 @@ MODULES = [
     'download',
     'eval',
     'train',
-    'prune'
+    'prune',
+    'setup'
 ]
 
 def parse_module():
-    assert len(sys.argv) > 1, "No module provided"
+    assert len(sys.argv) > 1, "No module provided.\n\nAccepted Modules: %s" % MODULES
+
     module = sys.argv[1]
-    assert module in MODULES, "Invalid module provided.\n\tAccepted Modules:\n\t\t- %s" % MODULES
+    assert module in MODULES, "Invalid module provided.\n\nAccepted Modules: %s" % MODULES
+
     return module
 
 def main():
     module = parse_module()
 
-    if module == 'clean':
+    if module == 'setup':
+        setup.setup()
+    elif module == 'clean':
         setup.clean()
     elif module == 'download':
         setup.download()
     elif module == 'eval':
-        setup.eval()
+        setup.evaluate()
     elif module == 'train':
         setup.train()
     elif module == 'prune':
