@@ -18,41 +18,36 @@ $ ./recyclr.py --help
 Accepted Modules: ['clean', 'download', 'eval', 'train', 'prune', 'setup']
 ```
 
-**clean:** Cleans the workspace
-
-**download:** downloads datasett and YOLACT
-
-**setup:** Clean & Download
-
-**train:** Begin training network
-
-**prune:** Relabel low-quantity training examples
-
-**eval:** Run the network on a video or RTMP stream
-
 ## Modules
 
-## Download and prune dataset
+## download
 Downloads the dataset, then prunes classes with fewer than 50 training instances.
-```
+```sh
 $ ./recyclr.py download
 $ ./recyclr.py prune 50
 ```
-## Train:
 
+## setup
+Sets up the environment to train or evaluate
+```sh
+$ ./recyclr.py setup
+```
+
+## train
+Trains the network by downloading the dataset, setting up the environment,
+and beginning the training
 ```sh
 $ ./recyclr.py train
 ```
 
-## Eval:
-
+## clean:
+Cleans the workspace by removing downloaded files and tmp directories
 ```sh
-$ ./recyclr.py eval
-````
+$ ./recyclr.py clean
+```
 
-## Download mode:
-If you want to manually run commands, you can use the download module to download datasets, weights, and backbones so you can run commands without needing to setup everything.
-
+## eval:
+Evaluates the input on the most recent weights
 ```sh
-$ python recyclr.py download
+$ ./recyclr.py eval inputvideo.mp4
 ```

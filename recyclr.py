@@ -33,7 +33,9 @@ def main():
     elif module == 'download':
         setup.download()
     elif module == 'eval':
-        setup.evaluate()
+        if len(sys.argv) > 2:
+            src = sys.argv[2]
+        setup.evaluate(input_video=src)
     elif module == 'train':
         setup.train()
     elif module == 'prune':
