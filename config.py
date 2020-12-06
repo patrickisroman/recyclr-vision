@@ -12,6 +12,8 @@ streams_file  = Path.joinpath(config_path, 'streams.json')
 
 class ConfigTree():
     def __init__(self, file, name=''):
+        if type(file) is str:
+            file = Path(file)
         self.tree = self.__load(file)
         self.name = name
 

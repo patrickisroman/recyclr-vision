@@ -120,6 +120,9 @@
     "bag" : {
         "parent" : "default"
     },
+    "pill sheet" : {
+        "parent" : "default"
+    },
     "newspaper" : {
         "parent" : "default"
     },
@@ -213,11 +216,23 @@
     "ball" : {
         "parent" : "default"
     },
+    "roll" : {
+        "parent" : "default"
+    },
+    "papertowel roll" : {
+        "parent" : "roll"
+    },
+    "toiletpaper roll" : {
+        "parent" : "roll"
+    },
     "lollipop stick" : {
         "parent" : "default"
     },
     "food can" : {
         "parent" : "can"
+    },
+    "food" : {
+        "parent" : "default"
     },
     "egg carton" : {
         "parent" : "carton"
@@ -240,6 +255,12 @@
     "ice cream spoon" : {
         "parent" : "spoon"
     },
+    "broken glass" : {
+        "parent" : "glass"
+    },
+    "magazine" : {
+        "parent" : "default"
+    },
     "tissue" : {
         "parent" : "default"
     },
@@ -253,6 +274,15 @@
         "parent" : "default"
     },
     "sock" : {
+        "parent" : "clothing"
+    },
+    "shoe" : {
+        "parent" : "clothing"
+    },
+    "mask" : {
+        "parent" : "default"
+    },
+    "glove" : {
         "parent" : "clothing"
     }
 }
