@@ -16,6 +16,7 @@ import shutil
 import json
 import boto3
 import sys
+import re
 
 from git import Repo
 from botocore import UNSIGNED
@@ -27,7 +28,7 @@ from stream import prune
 
 # Yolact Configurations
 
-VIDEO_MULTIFRAME = .1
+VIDEO_MULTIFRAME = 1
 TOP_K = 15
 SCORE_THRESHOLD = .5
 
@@ -93,7 +94,14 @@ def evaluate(config=YOLACT_CONF,
 
     # loaded
     if os.path.exists(BACKBONE_DIRECTORY):
-       weight = [w for w in os.listdir(BACKBONE_DIRECTORY) if 'interrupt' in w][-1]
+       weights_files = os.listdir(BACKBONE_DIRECTORY)
+       interrupted_weights = [w for w in weights_files if 'interrupt' in w]
+       autosaved_weights = [w for w in weights_files if re.search('.[0-9]+\_[0-9]+', w)]
+       if len(interrupted_weights) > 0:
+           weight = interrupted_weights[-1]
+       else:
+           weight = autosaved_weights[-1]
+
        weight = BACKBONE_DIRECTORY.joinpath(weight)
    
     print(weight)
