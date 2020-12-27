@@ -1,3 +1,4 @@
+# TACO_CLASS -> (UTD_ELEMENT, UTD_MATERIAL)
 mapping = {
     'aluminium foil' : ('sheet', 'aluminum'),
     'battery' : ('battery', ''),

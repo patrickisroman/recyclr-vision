@@ -67,3 +67,9 @@ class StreamManager:
     def get_parent(self, class_name):
         n = self.search_tree(class_name)
         return None if n is None else self.stream_tree.parent(n.identifier)
+
+    def mapping(self):
+        return {v:k for k,v in enumerate(self.in_order_list())}
+    
+    def reverse_mapping(self):
+        return {k:v for k,v in enumerate(self.in_order_list())}

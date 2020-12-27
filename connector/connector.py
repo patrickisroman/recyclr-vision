@@ -3,6 +3,7 @@ from . import trashcan_connector
 
 import json
 
+# best effort connector between dataset label mappings
 class Connector:
     def __init__(self):
         self.taco = taco_connector.mapping
@@ -10,11 +11,12 @@ class Connector:
     
     def __convert_coco(self, file, mapping, target_mapping):
         with open(file, 'r') as f:
-            annotations = json.loads(f.read())
+            coco = json.loads(f.read())
         
-        categories = {int(a['id']):a['name'].lower() for a in annotations['categories']}
-        annotations = annotations['annotations']
+        categories = {int(a['id']):a['name'].lower() for a in coco['categories']}
+        annotations = coco['annotations']
         results = []
+
         for i in range(len(annotations)):
             category_id = annotations[i]['category_id']
             if category_id not in categories or categories[category_id] not in mapping:
@@ -36,7 +38,8 @@ class Connector:
     
             results.append(annotations[i])
 
-        return results
+        coco['annotations'] = results
+        return coco
     
     def convert_taco_coco(self, taco_file, target_mapping):
         return self.__convert_coco(taco_file, self.taco, target_mapping)
