@@ -46,6 +46,7 @@ class ConfigTree():
         valid_entries = set(src.keys())
         for _,v in src.items():
             if 'parent' in v and v['parent'] not in valid_entries:
+                print(v['parent'], 'not in valid entries')
                 return False
         return True
     

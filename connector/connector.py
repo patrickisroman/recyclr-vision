@@ -15,7 +15,6 @@ class Connector:
         
         categories = {int(a['id']):a['name'].lower() for a in coco['categories']}
         annotations = coco['annotations']
-        results = []
 
         for i in range(len(annotations)):
             category_id = annotations[i]['category_id']
@@ -28,17 +27,15 @@ class Connector:
 
             (element, material) = mapping[category_name]
             if element not in target_mapping:
+                print(element, 'not in target mapping')
                 continue
 
             target_id = target_mapping[element]
-            
             annotations[i]['category_id'] = target_id
+            annotations[i]['element'] = element
             if material is not None:
                 annotations[i]['material'] = material
     
-            results.append(annotations[i])
-
-        coco['annotations'] = results
         return coco
     
     def convert_taco_coco(self, taco_file, target_mapping):

@@ -16,7 +16,6 @@ import json as jsonlib
 
 from PIL import Image
 from git import Repo
-from connector import connector
 
 TACO_GIT_REPO_URL = 'https://github.com/pedropro/TACO.git'
 
@@ -48,8 +47,8 @@ def setup():
         print('Ruh roh, couldn\'t find a virtualenv directory, so this script may fail!')
 
     # Download taco files using the taco download script
-    # Fuuuck this is slow, it downloads on a single thread, 1 at a time...
-    # could use git to cherry pick a commit to download using a threadpool but im too lazy for now 
+    # Fuck this is slow, it downloads on a single thread, 1 at a time...
+    # could cherry pick a commit to download using a threadpool but im too lazy for now 
     p = subprocess.Popen(TACO_DOWNLOAD_COMMAND, cwd=TACO_GIT_DIR)
     p.wait()
 
@@ -76,5 +75,3 @@ def setup():
         f.write(outstr)
     
     shutil.rmtree(TACO_GIT_DIR)
-
-def apply_connector():

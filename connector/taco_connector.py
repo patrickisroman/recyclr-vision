@@ -52,7 +52,7 @@ mapping = {
     'plastic utensils' : ('utensil', 'plastic'),
     'pop tab' : ('pop top', 'aluminum'),
     'rope & strings' : ('rope', None),
-    'scrap metal' : (None, 'metal'),
+    'scrap metal' : ('misc', 'metal'),
     'shoe' : ('shoe', None),
     'squeezable tube' : ('tube', 'plastic'),
     'plastic straw' : ('straw', 'plastic'),

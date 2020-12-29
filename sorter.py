@@ -1,5 +1,5 @@
+from detector.detection import Detection
 from pathlib import Path, PosixPath
-from detection import Detection
 from utils import DynamicEnum
 from enum import Enum
 
@@ -89,3 +89,6 @@ class Sorter:
     
     def get_map(self):
         return self.sort_map.copy()
+
+    def get_element_map(self):
+        return self.elements.to_enum().as_map()
