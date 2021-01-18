@@ -1,5 +1,6 @@
 from detector.detection import Detection
 from pathlib import Path, PosixPath
+from itertools import product
 from utils import DynamicEnum
 from enum import Enum
 
@@ -51,8 +52,10 @@ class Sorter:
         return streams
 
     def sort(self, detection:Detection=None, material=None, element=None):
-        if detection is not None:
-            (element, material) = (detection.element, detection.material)
+        if detection is None:
+            raise ValueError('Detection cannot be None: %s' % detection)
+        
+        element, material = detection.element, detection.material
         
         if element is None or material is None:
             return None
@@ -66,9 +69,6 @@ class Sorter:
         current_material = material
         current_element = element
 
-        if current_material is None or current_element is None:
-            return None
-
         while not current_material in self.sort_map:
             current_material = self.materials.get_parents(current_material)[0]
 
@@ -80,10 +80,9 @@ class Sorter:
     def get_stream_list(self, stream):
         out = list()
 
-        for m in self.enums['materials']:
-            for e in self.enums['elements']:
-                if self.sort(material=m.name, element=e.name) == stream:
-                    out.append((m.name, e.name))
+        for m,e in product(self.enums['materials'], self.enums['elements']):
+            if self.sort(material=m.name, element=e.name) == stream:
+                out.append((m.name, e.name))
     
         return out
     

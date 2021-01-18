@@ -89,5 +89,14 @@
     },
     "steel" : {
         "parent" : "metal"
+    },
+    "copper" : {
+        "parent" : "metal"
+    },
+    "brass" : {
+        "parent" : "metal"
+    },
+    "iron" : {
+        "parent" : "metal"
     }
 }

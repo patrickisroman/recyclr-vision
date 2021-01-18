@@ -3,6 +3,15 @@
     "2 liter bottle" : {
         "parent" : "beverage bottle"
     },
+    "9v battery" : {
+        "parent" : "battery"
+    },
+    "aa battery" : {
+        "parent" : "battery"
+    },
+    "aaa battery" : {
+        "parent" : "battery"
+    },
     "bag" : {
         "parent" : "default"
     },
@@ -26,6 +35,9 @@
     },
     "beverage bottle" : {
         "parent" : "bottle"
+    },
+    "beverage glass" : {
+        "parent" : "default"
     },
     "bottle" : {
         "parent" : "default"
@@ -210,6 +222,9 @@
     "receipt" : {
         "parent" : "sheet"
     },
+    "reusable bag" : {
+        "parent" : "bag"
+    },
     "reusable waterbottle" : {
         "parent" : "beverage bottle"
     },
@@ -221,6 +236,9 @@
     },
     "rubberband" : {
         "parent" : "default"
+    },
+    "sauce packet" : {
+        "parent" : "condiment packet"
     },
     "sheet" : {
         "parent" : "default"
@@ -264,6 +282,9 @@
     "tag" : {
         "parent" : "sheet"
     },
+    "takeout box" : {
+        "parent" : "box"
+    },
     "teabag" : {
         "parent" : "default"
     },
@@ -272,6 +293,9 @@
     },
     "toiletpaper roll" : {
         "parent" : "roll"
+    },
+    "toothpaste tube" : {
+        "parent" : "tube"
     },
     "trash bag" : {
         "parent" : "bag"
@@ -293,6 +317,9 @@
     },
     "wine bottle" : {
         "parent" : "beverage bottle"
+    },
+    "wine glass" : {
+        "parent" : "beverage glass"
     },
     "ziplock bag" : {
         "parent" : "bag"

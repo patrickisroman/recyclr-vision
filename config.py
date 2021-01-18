@@ -16,8 +16,13 @@ class ConfigTree():
             file = Path(file)
         self.tree = self.__load(file)
         self.name = name
-
+    
+    def print(self, item=None):
+        self.tree.show(nid=self.get(item))
+    
     def get_parents(self, child) -> list:
+        if type(child) is Enum:
+            child = child.name
         return list(self.tree.rsearch(child))[1:]
 
     def type_of(self, parent, child) -> bool:
@@ -25,11 +30,11 @@ class ConfigTree():
             and self.tree.contains(child) 
             and self.tree.is_ancestor(parent, child))
 
+    def get(self, item) -> Node:
+        return self.tree.get_node(item)
+
     def get_parent(self, item) -> Node:
-        if self.tree is None:
-            return None
-        
-        node = self.tree.get_node(item)
+        node = self.get(item)
 
         if node is None:
             return None
@@ -42,11 +47,11 @@ class ConfigTree():
         
         with open(file, 'r') as f:
             src = jsonlib.loads(f.read())
-        
         valid_entries = set(src.keys())
+        
         for _,v in src.items():
-            if 'parent' in v and v['parent'] not in valid_entries:
-                print(v['parent'], 'not in valid entries')
+            if 'parent' in v and v['parent'].strip() not in valid_entries:
+                print(v, 'not a valid entry')
                 return False
         return True
     
@@ -77,3 +82,14 @@ class ConfigTree():
     
     def to_enum(self) -> 'DynamicEnum':
         return DynamicEnum.from_json({k.tag:i for i,k in enumerate(self.tree.all_nodes())}, self.name)
+    
+if __name__ == '__main__':
+    elements = ConfigTree(elements_file)
+    materials = ConfigTree(material_file)
+
+    with open('config.tree', 'w+') as f:
+        config = {
+            'elements' : jsonlib.loads(elements.tree.to_json()),
+            'materials' : jsonlib.loads(materials.tree.to_json())
+        }
+        f.write(jsonlib.dumps(config, indent=4))

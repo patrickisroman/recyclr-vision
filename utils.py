@@ -5,9 +5,9 @@ import json as jsonlib
 class DynamicEnum(Enum):
     def __init__(self, enum, *args, **kwargs):
         super(DynamicEnum, self).__init__(*args, **kwargs)
-    
+
     @classmethod
-    def as_json(cls, indent=4) -> str:
+    def to_json(cls, indent=4) -> str:
         return jsonlib.dumps({e.name:e.value for e in set(cls)}, sort_keys=True, indent=indent)
 
     @classmethod
